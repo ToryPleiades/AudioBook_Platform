@@ -7,12 +7,12 @@
     <li><a href="{% url 'backstage_users_add' %}"><i class="icon-new-file"></i>Add Members </a></li>
     <li><a href="charts.html"><i class="fa fa-bar-chart"></i>Chart </a></li>
     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
-            <i class="icon-windows"></i>Commodity Manage </a>
+            <i class="icon-windows"></i>Book Manage </a>
         <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
             <li><a href="{% url 'backstage_types_index' %}">Browse Category</a></li>
             <li><a href="{% url 'backstage_types_add' 0 %}">Add Category</a></li>
-            <li><a href="{% url 'backstage_goods_index' %}">Commodity Info</a></li>
-            <li><a href="{% url 'backstage_goods_add' %}">Commodity Addition</a></li>
+            <li><a href="{% url 'backstage_goods_index' %}">Book Info</a></li>
+            <li><a href="{% url 'backstage_goods_add' %}">Book Addition</a></li>
         </ul>
     </li>
 </ul>
@@ -22,15 +22,15 @@
 <!-- Page Header-->
 <div class="page-header no-margin-bottom">
     <div class="container-fluid">
-        <h2 class="h5 no-margin-bottom">Edit Commodity Information</h2>
+        <h2 class="h5 no-margin-bottom">Edit Book Information</h2>
     </div>
 </div>
 <!-- Breadcrumb-->
 <div class="container-fluid">
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'backstage_index' %}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'backstage_goods_index' %}">Commodity</a></li>
-        <li class="breadcrumb-item active">Edit Commodity Information </li>
+        <li class="breadcrumb-item"><a href="{% url 'backstage_goods_index' %}">Book</a></li>
+        <li class="breadcrumb-item active">Edit Book Information </li>
     </ul>
 </div>
 <section class="no-padding-top">
@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="block">
-                    <div class="title"><strong>Edit Commodity Information</strong></div>
+                    <div class="title"><strong>Edit Book Information</strong></div>
                     <div class="block-body">
                         <form id="edit-profile" action="{% url 'backstage_goods_update' goods.id %}"
                             class="form-horizontal" method="POST">
@@ -46,9 +46,9 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group-material">
-                                        <input id="commodity-name" type="text" name="commodityName" required
+                                        <input id="Book-name" type="text" name="BookName" required
                                             class="input-material" value="{{ goods.goods }}">
-                                        <label for="commodity-name" class="label-material">CommodityName</label>
+                                        <label for="Book-name" class="label-material">BookName</label>
                                     </div>
                                     <div class="line"></div>
                                     <div class="form-group-material">
