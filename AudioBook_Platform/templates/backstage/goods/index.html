@@ -120,11 +120,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>CommodityName</th>
+                                    <th>Author</th>
                                     <th>Category</th>
-                                    <th>PIC</th>
-                                    <th>Price</th>
-                                    <th>ClickNum</th>
-                                    <th>State</th>
+                                    <th>Add time</th>
                                     <th>Operation</th>
                                 </tr>
                             </thead>
@@ -133,19 +131,9 @@
                                 <tr>
                                     <th scope="row">{{ vo.id }}</th>
                                     <th>{{ vo.goods }}</th>
+                                    <th>{{ vo.author }}</th>
                                     <td>{{ vo.typename }}</td>
-                                    <td><img src="../static/commodity/s_{{ vo.picname }}"></td>
-                                    <td>{{ vo.price }}</td>
-                                    <td>{{ vo.clicknum }}</td>
-                                    <td>
-                                        {% if vo.state == 1 %}
-                                        NEW
-                                        {% elif vo.state == 2 %}
-                                        On Sale
-                                        {% else %}
-                                        Sold Out
-                                        {% endif %}
-                                    </td>
+                                    <td>{{ vo.addtime }}</td>
                                     <td>
                                         <a style="text-decoration: none;" href="{% url 'backstage_goods_edit' vo.id %}"
                                             class='view-link'>Edit</a>

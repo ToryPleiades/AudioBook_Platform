@@ -42,15 +42,19 @@ class Books(models.Model):
     """电子书信息模型"""
     typeid = models.IntegerField()  # 电子书类别ID
     goods = models.CharField(max_length=32)     # 电子书名
+    author = models.CharField(max_length=32)    # 电子书作者
     content = models.CharField(max_length=32)   # 电子书描述
     addtime = models.DateTimeField(default=datetime.now)
+    novel = models.TextField()                  # 电子书内容
 
     def toDict(self):
         return {
             'id': self.id,
             'typeid': self.typeid,
             'goods': self.goods,
-            'content': self.content
+            'author': self.author,
+            'content': self.content,
+            'novel': self.novel
         }
 
     class Meta:
