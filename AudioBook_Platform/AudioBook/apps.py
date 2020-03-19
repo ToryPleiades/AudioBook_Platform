@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class AudiobookConfig(AppConfig):
+class AudioBookConfig(AppConfig):
     name = 'AudioBook'
