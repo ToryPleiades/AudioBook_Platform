@@ -1,97 +1,101 @@
 {% extends 'backstage/base.html' %}
 
 {% block sidebar %}
-<ul class="list-unstyled">
-    <li><a href="{% url 'backstage_index' %}"> <i class="icon-home"></i>Home </a></li>
-    <li><a href="{% url 'backstage_users_index' %}"><i class="icon-user-outline"></i>Members </a></li>
-    <li><a href="{% url 'backstage_users_add' %}"><i class="icon-new-file"></i>Add Members </a></li>
-    <li><a href="charts.html"><i class="fa fa-bar-chart"></i>Chart </a></li>
-    <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
+    <ul class="list-unstyled">
+        <li><a href="{% url 'backstage_index' %}"> <i class="icon-home"></i>Home </a></li>
+        <li><a href="{% url 'backstage_users_index' %}"><i class="icon-user-outline"></i>Members </a></li>
+        <li><a href="{% url 'backstage_users_add' %}"><i class="icon-new-file"></i>Add Members </a></li>
+        <li><a href="charts.html"><i class="fa fa-bar-chart"></i>Chart </a></li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
             <i class="icon-windows"></i>Book Manage </a>
-        <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-            <li><a href="{% url 'backstage_types_index' %}">Browse Category</a></li>
-            <li><a href="{% url 'backstage_types_add' 0 %}">Add Category</a></li>
-            <li><a href="{% url 'backstage_goods_index' %}">Book Info</a></li>
-            <li><a href="{% url 'backstage_goods_add' %}">Book Addition</a></li>
-        </ul>
-    </li>
-</ul>
+            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="{% url 'backstage_types_index' %}">Browse Category</a></li>
+                <li><a href="{% url 'backstage_types_add' 0 %}">Add Category</a></li>
+                <li><a href="{% url 'backstage_goods_index' %}">Book Info</a></li>
+                <li><a href="{% url 'backstage_goods_add' %}">Book Addition</a></li>
+            </ul>
+        </li>
+    </ul>
 {% endblock %}
 
 {% block mainbody %}
-<!-- Page Header-->
-<div class="page-header no-margin-bottom">
-    <div class="container-fluid">
-        <h2 class="h5 no-margin-bottom">Edit Book Information</h2>
+    <!-- Page Header-->
+    <div class="page-header no-margin-bottom">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Edit Book Information</h2>
+        </div>
     </div>
-</div>
-<!-- Breadcrumb-->
-<div class="container-fluid">
-    <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'backstage_index' %}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'backstage_goods_index' %}">Book</a></li>
-        <li class="breadcrumb-item active">Edit Book Information </li>
-    </ul>
-</div>
-<section class="no-padding-top">
+    <!-- Breadcrumb-->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="block">
-                    <div class="title"><strong>Edit Book Information</strong></div>
-                    <div class="block-body">
-                        <form id="edit-profile" action="{% url 'backstage_goods_update' goods.id %}"
-                            class="form-horizontal" method="POST">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group-material">
-                                        <input id="Book-name" type="text" name="BookName" required
-                                            class="input-material" value="{{ goods.goods }}">
-                                        <label for="Book-name" class="label-material">BookName</label>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'backstage_index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'backstage_goods_index' %}">Book</a></li>
+            <li class="breadcrumb-item active">Edit Book Information</li>
+        </ul>
+    </div>
+    <section class="no-padding-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="block">
+                        <div class="title"><strong>Edit Book Information</strong></div>
+                        <div class="block-body">
+                            <form id="edit-profile" action="{% url 'backstage_goods_update' goods.id %}"
+                                  class="form-horizontal" method="POST" onclick="assign()">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group-material">
+                                            <input id="Book-name" type="text" name="BookName" required
+                                                   class="input-material" value="{{ goods.goods }}">
+                                            <label for="Book-name" class="label-material">BookName</label>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="form-group-material">
+                                            <input id="author" type="text" name="Author" required
+                                                   class="input-material" value="{{ goods.author }}">
+                                            <label for="manufacturer" class="label-material">Author</label>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="form-group-material">
+                                            <input id="product-introduction" name="productIntroduction" required
+                                                   class="input-material" value="{{ goods.content }}">
+                                            <label for="product-introduction" class="label-material">Discribe</label>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="form-group-material">
+                                            <label for="product-introduction" class="label-material"
+                                                   style="color: #f700ff">Novel</label><br>
+                                            <div id="Novel-div" contenteditable="true" class="label-material">
+                                                {{ goods.novel }}
+                                            </div>
+                                            <textarea id="Novel-text" name="Novel"
+                                                      style="visibility: hidden"></textarea>
+                                        </div>
                                     </div>
                                     <div class="line"></div>
-                                    <div class="form-group-material">
-                                        <input id="manufacturer" type="text" name="Manufacturer" required
-                                            class="input-material" value="{{ goods.company }}">
-                                        <label for="manufacturer" class="label-material">Manufacturer </label>
+                                    <br><br><br><br><br><br>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 ml-auto">
+                                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
                                     </div>
-                                    <div class="line"></div>
-                                    <div class="form-group-material">
-                                        <input id="unit-price" type="text" name="unitPrice" required
-                                            class="input-material" value="{{ goods.price }}">
-                                        <label for="unit-price" class="label-material">UnitPrice </label>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="form-group-material">
-                                        <input id="inventory" type="text" name="Inventory" required
-                                            class="input-material" value="{{ goods.store }}">
-                                        <label for="inventory" class="label-material">Inventory </label>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="form-group-material">
-                                        <input id="product-introduction" name="productIntroduction" required
-                                            class="input-material" value="{{ goods.content }}">
-                                        <label for="product-introduction" class="label-material">ProductIntroduction
-                                        </label>
-                                    </div>
-                                    <div class="line"></div>
                                 </div>
-                            </div>
-                            <div class="line"></div>
-                            <br><br><br><br><br><br>
-                            <div class="form-group row">
-                                <div class="col-sm-12 ml-auto">
-                                    <button type="reset" class="btn btn-secondary">Cancel</button>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <script>
+        function assign() {
+            let content = document.getElementById("Novel-div").innerHTML
+            let textarea = document.getElementById("Novel-text")
+            textarea.innerHTML = content
+        }
+    </script>
 {% endblock %}

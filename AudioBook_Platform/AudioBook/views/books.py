@@ -98,11 +98,10 @@ def edit(request, gid):
 def update(request, gid):
     """执行编辑"""
     ob = Books.objects.get(id=gid)
-    ob.goods = request.POST['commodityName']
-    ob.company = request.POST['Manufacturer']
-    ob.price = request.POST['unitPrice']
-    ob.store = request.POST['Inventory']
+    ob.goods = request.POST['BookName']
+    ob.author = request.POST['Author']
     ob.content = request.POST['productIntroduction']
+    ob.novel = request.POST['Novel']
     ob.save()
     return redirect('/backstage/goods')
 
