@@ -76,7 +76,7 @@ def insert(request):
         ob.addtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.novel = request.POST['Novel']
         ob.save()
-        return redirect('/backstage/goods')
+        return redirect('/goods')
     except Exception as err:
         print(err)
         context = {'Info': 'Addition Failed', 'Detail': err}
@@ -103,7 +103,7 @@ def update(request, gid):
     ob.content = request.POST['productIntroduction']
     ob.novel = request.POST['Novel']
     ob.save()
-    return redirect('/backstage/goods')
+    return redirect('/goods')
 
 
 def delete(request, gid):
@@ -111,7 +111,7 @@ def delete(request, gid):
     try:
         ob = Books.objects.get(id=gid)
         ob.delete()
-        return redirect('/backstage/goods')
+        return redirect('/goods')
     except Exception as err:
         print(err)
         context = {'Info': 'Delete Failed', 'Detail': err}

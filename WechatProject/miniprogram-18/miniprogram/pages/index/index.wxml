@@ -1,0 +1,32 @@
+<!-- 轮播图 -->
+<swiper autoplay>
+  <block wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" mode="aspectFill"/>
+    </swiper-item>
+  </block>
+  </swiper>
+<!-- 列表 -->
+<view class="news-list">
+<scroll-view scroll-y="true" class="container">
+	<block wx:for="{{books}}" wx:key="{{item._id}}" >
+  <navigator url="../detail/detail?id={{item._id}}">
+		<view class="block">
+			<view class="left">
+				<image src="{{item.poster}}" mode="aspectFill"/>
+			</view>
+			<view class="right">
+				<view class="content">
+					<view>
+						<text class="item.title">{{item.title}}</text>	
+					</view>
+					<view>
+						<text class="song-artists">{{item.author}}</text>
+					</view>
+				</view>
+			</view>
+		</view>	
+    </navigator>
+	</block>
+</scroll-view>
+</view>

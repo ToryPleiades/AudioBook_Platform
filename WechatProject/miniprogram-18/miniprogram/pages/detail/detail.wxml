@@ -1,0 +1,17 @@
+<view class="container">
+  <view class="poster">
+    <image src="{{books.poster}}"></image>
+  </view>
+  <view class="title">{{books.title}}</view>
+
+  <view class="content">
+    <text>{{books.content}}</text>
+  </view>
+</view>
+<view class="container">
+    <view class="operation-container">
+ <audio id="Audio" poster="{{books.poster}}" name="{{books.title}}" author="{{books.author}}" src="{{books.src}}" controls ></audio>
+    </view>
+    <button type="primary" bindtap="audioPlay">播放</button>
+<button type="primary" bindtap="audioPause">暂停</button>
+</view>

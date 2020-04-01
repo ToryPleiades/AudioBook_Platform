@@ -90,38 +90,7 @@
                         </div>
                     </form>
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>BookName</th>
-                                    <th>Author</th>
-                                    <th>Category</th>
-                                    <th>Introduction</th>
-                                    <th>Add time</th>
-                                    <th>Operation</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for vo in goodslist %}
-                                <tr>
-                                    <th scope="row">{{ vo.id }}</th>
-                                    <th>{{ vo.goods }}</th>
-                                    <th>{{ vo.author }}</th>
-                                    <td>{{ vo.typename }}</td>
-                                    <td>{{ vo.content }}</td>
-                                    <td>{{ vo.addtime }}</td>
-                                    <td>
-                                        <a style="text-decoration: none;" href="{% url 'backstage_goods_edit' vo.id %}"
-                                            class='view-link'>Edit</a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a style="text-decoration: none;" href="{% url 'backstage_goods_del' vo.id %}"
-                                            class='view-link' onclick="del()">Delete</a>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+
                     </div>
                 </div>
                 <div class="table-responsive">
