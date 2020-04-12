@@ -4,6 +4,7 @@ from common.models import Books, Types
 from django.db.models import Q
 from datetime import datetime
 import time
+import os
 
 
 def index(request):
@@ -68,13 +69,27 @@ def add(request):
 def insert(request):
     """执行添加"""
     try:
+        # 音频上传
+        myfile = request.FILES.get('productAudio', None)
+        if not myfile:
+            context = {
+                'Info': 'Addition Failed',
+                'Detail': 'No audios detected'
+            }
+            return render(request, 'backstage/info.html', context)
+        filename = str(time.time()) + '.' + myfile.name.split('.').pop()
+        with open('./static/commodity/' + filename, 'wb+') as destination:
+            for chunk in myfile.chunks():
+                destination.write(chunk)
+
         ob = Books()
         ob.typeid = request.POST['typeID']
         ob.author = request.POST['Author']
-        ob.goods = request.POST['commodityName']
-        ob.content = request.POST['productIntroduction']
+        ob.goods = request.POST['BookName']
+        ob.content = request.POST['bookIntroduction']
         ob.addtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ob.novel = request.POST['Novel']
+        ob.audio = filename
         ob.save()
         return redirect('/goods')
     except Exception as err:
@@ -97,11 +112,24 @@ def edit(request, gid):
 
 def update(request, gid):
     """执行编辑"""
+    update_file = request.FILES.get('updateAudio')
+    if not update_file:
+        context = {
+            'Info': 'Addition Failed',
+            'Detail': 'No audios detected'
+        }
+        return render(request, 'backstage/info.html', context)
+    filename = str(time.time()) + '.' + update_file.name.split('.').pop()
+    with open('./static/commodity/' + filename, 'wb+') as destination:
+        for chunk in update_file.chunks():
+            destination.write(chunk)
+
     ob = Books.objects.get(id=gid)
     ob.goods = request.POST['BookName']
     ob.author = request.POST['Author']
     ob.content = request.POST['productIntroduction']
     ob.novel = request.POST['Novel']
+    ob.audio = filename
     ob.save()
     return redirect('/goods')
 
@@ -111,6 +139,20 @@ def delete(request, gid):
     try:
         ob = Books.objects.get(id=gid)
         ob.delete()
+        return redirect('/goods')
+    except Exception as err:
+        print(err)
+        context = {'Info': 'Delete Failed', 'Detail': err}
+        return render(request, 'backstage/info.html', context)
+
+
+def audio_delete(request, aid):
+    """音频信息删除"""
+    try:
+        ob = Books.objects.get(audio=aid)
+        os.remove('./static/commodity/' + ob.audio)
+        ob.audio = None
+        ob.save()
         return redirect('/goods')
     except Exception as err:
         print(err)

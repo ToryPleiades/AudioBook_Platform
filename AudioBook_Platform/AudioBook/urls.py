@@ -40,4 +40,5 @@ urlpatterns = [
     path('goods/update/<int:gid>', books.update,
          name='backstage_goods_update'),
     path('goods/del/<int:gid>', books.delete, name='backstage_goods_del'),
+    path('goods/audio_del/<aid>', books.audio_delete, name='backstage_audio_del')
 ]

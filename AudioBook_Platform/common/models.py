@@ -46,6 +46,7 @@ class Books(models.Model):
     content = models.CharField(max_length=32)   # 电子书描述
     addtime = models.DateTimeField(default=datetime.now)
     novel = models.TextField()                  # 电子书内容
+    audio = models.CharField(max_length=100)    # 音频
 
     def toDict(self):
         return {
@@ -54,7 +55,8 @@ class Books(models.Model):
             'goods': self.goods,
             'author': self.author,
             'content': self.content,
-            'novel': self.novel
+            'novel': self.novel,
+            'audio': self.audio,
         }
 
     class Meta:
