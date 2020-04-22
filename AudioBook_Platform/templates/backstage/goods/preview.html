@@ -71,7 +71,9 @@
                                         <div class="form-group-material">
                                             {% if goods.audio != None %}
                                                 <input class="input-material" value="{{ goods.audio }}" disabled>
-                                                <a href="../../../static/commodity/{{ goods.audio }}" class='view-link'>Audition - 试听</a>
+                                                <a href="../../../static/commodity/{{ goods.audio }}" class='view-link'>
+                                                    Audition - 试听&nbsp;&nbsp;&nbsp;&nbsp;地址 - http://121.40.199.164:8000/static/commodity/{{ goods.audio }}
+                                                </a>
                                             {% else %}
                                                 <input class="input-material" value="None" disabled>
                                             {% endif %}
