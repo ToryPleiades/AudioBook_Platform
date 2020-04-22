@@ -119,6 +119,10 @@
                                                class='view-link'>Preview</a>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <a style="text-decoration: none;"
+                                               href="{% url 'backstage_json' vo.id %}"
+                                               class='view-link'>JSON</a>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a style="text-decoration: none;"
                                                href="{% url 'backstage_goods_del' vo.id %}"
                                                class='view-link' onclick="del()">Delete</a>
                                         </td>
