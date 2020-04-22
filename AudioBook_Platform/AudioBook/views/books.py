@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import JsonResponse
 from common.models import Books, Types
 from django.db.models import Q
 from datetime import datetime
@@ -181,7 +181,13 @@ def json(request):
         for vo in json_data:
             js_data = vo.toDict()
             book_list.append(js_data)
-        return HttpResponse(book_list)
+
+        data = {
+            'name': '书籍列表',
+            'data': book_list
+        }
+
+        return JsonResponse(data, json_dumps_params={'ensure_ascii':False})
     except Exception as err:
         print(err)
         context = {'Info': 'Fetch json FAILED', 'Detail': err}
