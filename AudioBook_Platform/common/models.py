@@ -55,8 +55,8 @@ class Books(models.Model):
             'goods': self.goods,
             'author': self.author,
             'content': self.content,
-            'novel': self.novel,
             'audio': self.audio,
+            'novel': self.novel,
         }
 
     class Meta:
