@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.http import JsonResponse
+from django.http import HttpResponse
 from common.models import Books, Types
 from django.db.models import Q
 from datetime import datetime
@@ -173,12 +173,15 @@ def audio_delete(request, aid):
         return render(request, 'backstage/info.html', context)
 
 
-def json(request, gid):
+def json(request):
     """返回数据JSON"""
     try:
-        ob = Books.objects.get(id=gid)
-        data = ob.toDict()
-        return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
+        json_data = Books.objects.all()
+        book_list = []
+        for vo in json_data:
+            js_data = vo.toDict()
+            book_list.append(js_data)
+        return HttpResponse(book_list)
     except Exception as err:
         print(err)
         context = {'Info': 'Fetch json FAILED', 'Detail': err}

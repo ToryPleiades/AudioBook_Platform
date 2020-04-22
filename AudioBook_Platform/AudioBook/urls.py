@@ -42,5 +42,5 @@ urlpatterns = [
          name='backstage_goods_update'),
     path('goods/del/<int:gid>', books.delete, name='backstage_goods_del'),
     path('goods/audio_del/<aid>', books.audio_delete, name='backstage_audio_del'),
-    path('goods/json/<int:gid>', books.json, name='backstage_json')
+    path('goods/json', books.json, name='backstage_json')
 ]

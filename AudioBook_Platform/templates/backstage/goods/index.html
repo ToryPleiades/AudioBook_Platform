@@ -78,11 +78,19 @@
                                                             style="height: 30px; width: 80px; line-height: 0px;">Search
                                                     </button>
                                                 </div>
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-4">
                                                     <button class="btn btn-secondary"
                                                             style="height: 30px; width: 60px; line-height: 0px;">
                                                         <a href="{% url 'backstage_users_index' %}"
                                                            style="text-decoration: none; color: white;">All</a>
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <button class="btn btn-secondary"
+                                                            style="height: 30px; width: 60px; line-height: 0px;">
+                                                        <a style="text-decoration: none;"
+                                                           href="{% url 'backstage_json'%}"
+                                                           class='view-link'>JSON</a>
                                                     </button>
                                                 </div>
                                             </div>
@@ -117,10 +125,6 @@
                                             <a style="text-decoration: none;"
                                                href="{% url 'backstage_goods_preview' vo.id %}"
                                                class='view-link'>Preview</a>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a style="text-decoration: none;"
-                                               href="{% url 'backstage_json' vo.id %}"
-                                               class='view-link'>JSON</a>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <a style="text-decoration: none;"
                                                href="{% url 'backstage_goods_del' vo.id %}"
