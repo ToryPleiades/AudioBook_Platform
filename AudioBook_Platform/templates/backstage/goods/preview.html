@@ -71,10 +71,11 @@
                                         <div class="form-group-material">
                                             {% if goods.audio != None %}
                                                 <input class="input-material" value="{{ goods.audio }}" disabled>
+                                                <a href="../../../static/commodity/{{ goods.audio }}" class='view-link'>Audition - 试听</a>
                                             {% else %}
                                                 <input class="input-material" value="None" disabled>
                                             {% endif %}
-                                            <label for="product-audio" class="label-material">Audio</label>
+                                            <label for="product-audio" class="label-material">Audio</label><br>
                                         </div>
                                         <div class="line"></div>
                                         <div class="form-group-material">
