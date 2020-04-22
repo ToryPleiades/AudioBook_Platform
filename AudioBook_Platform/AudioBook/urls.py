@@ -36,6 +36,7 @@ urlpatterns = [
     path('goods', books.index, name='backstage_goods_index'),
     path('goods/add', books.add, name='backstage_goods_add'),
     path('goods/insert', books.insert, name='backstage_goods_insert'),
+    path('goods/preview/<int:gid>', books.preview, name='backstage_goods_preview'),
     path('goods/edit/<int:gid>', books.edit, name='backstage_goods_edit'),
     path('goods/update/<int:gid>', books.update,
          name='backstage_goods_update'),

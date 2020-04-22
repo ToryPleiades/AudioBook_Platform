@@ -98,6 +98,18 @@ def insert(request):
         return render(request, 'backstage/info.html', context)
 
 
+def preview(request, gid):
+    """商品信息浏览"""
+    try:
+        ob = Books.objects.get(id=gid)
+        context = {'goods': ob}
+        return render(request, 'backstage/goods/preview.html', context)
+    except Exception as err:
+        print(err)
+        context = {'Info': 'Cannnot fetch the page', 'Detail': err}
+        return render(request, 'backstage/info.html', context)
+
+
 def edit(request, gid):
     """商品信息编辑"""
     try:
