@@ -178,8 +178,7 @@ def json(request, gid):
     try:
         ob = Books.objects.get(id=gid)
         data = ob.toDict()
-        print(data)
-        return JsonResponse(data)
+        return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
     except Exception as err:
         print(err)
         context = {'Info': 'Fetch json FAILED', 'Detail': err}
