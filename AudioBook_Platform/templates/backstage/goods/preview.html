@@ -39,7 +39,7 @@
                     <div class="block">
                         <div class="title">
                             <strong>Preview Book Information</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a style="text-decoration: none;" href="{% url 'backstage_goods_edit' goods.id %}"
+                            <a style="text-decoration: none;" href="{% url 'backstage_goods_edit' goods.id %}"
                                class='view-link'>EDIT</a>
                         </div>
                         <div class="block-body">
@@ -69,28 +69,19 @@
                                         </div>
                                         <div class="line"></div>
                                         <div class="form-group-material">
-                                            <label for="product-introduction" class="label-material">Audio</label>
                                             {% if goods.audio != None %}
-                                                <table class="table table-striped table-hover">
-                                                    <tr>
-                                                        <th>{{ goods.audio }}</th>
-                                                        <th>
-                                                            <a style="text-decoration: none;"
-                                                               href="{% url 'backstage_audio_del' goods.audio %}"
-                                                               class='view-link' onclick="del()">Delete
-                                                            </a>
-                                                        </th>
-                                                    </tr>
-                                                </table>
+                                                <input class="input-material" value="{{ goods.audio }}" disabled>
                                             {% else %}
                                                 <input class="input-material" value="None" disabled>
                                             {% endif %}
+                                            <label for="product-audio" class="label-material">Audio</label>
                                         </div>
                                         <div class="line"></div>
                                         <div class="form-group-material">
                                             <label for="product-introduction" class="label-material"
                                                    style="color: #f700ff">Novel</label><br>
-                                            <div id="Novel-div" contenteditable="true" class="label-material" style="pointer-events: none">
+                                            <div id="Novel-div" contenteditable="true" class="label-material"
+                                                 style="pointer-events: none">
                                                 {{ goods.novel }}
                                             </div>
                                             <textarea id="Novel-text" name="Novel"
