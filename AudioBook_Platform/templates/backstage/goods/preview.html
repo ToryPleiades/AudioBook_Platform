@@ -73,7 +73,7 @@
                                                 <input class="input-material"
                                                        value="{{ goods.audio }}"
                                                        disabled>
-                                                <a href="../../../static/commodity/{{ goods.audio }}" class='view-link'>Audition
+                                                <a href="{{ goods.audio }}" class='view-link'>Audition
                                                     - 试听</a>
                                             {% else %}
                                                 <input class="input-material" value="None" disabled>
@@ -86,7 +86,7 @@
                                                 <input class="input-material"
                                                        value="{{ goods.pic }}"
                                                        disabled>
-                                                <a href="../../../static/commodity/{{ goods.pic }}" class='view-link'>Check - 查看</a>
+                                                <a href="{{ goods.pic }}" class='view-link'>Check - 查看</a>
                                             {% else %}
                                                 <input class="input-material" value="None" disabled>
                                             {% endif %}
