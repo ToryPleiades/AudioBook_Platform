@@ -82,6 +82,18 @@
                                         </div>
                                         <div class="line"></div>
                                         <div class="form-group-material">
+                                            {% if goods.pic != None %}
+                                                <input class="input-material"
+                                                       value="{{ goods.pic }}"
+                                                       disabled>
+                                                <a href="../../../static/commodity/{{ goods.pic }}" class='view-link'>Check - 查看</a>
+                                            {% else %}
+                                                <input class="input-material" value="None" disabled>
+                                            {% endif %}
+                                            <label for="product-audio" class="label-material">Picture</label><br>
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="form-group-material">
                                             <label for="product-introduction" class="label-material"
                                                    style="color: #f700ff">Novel</label><br>
                                             <div id="Novel-div" contenteditable="true" class="label-material"

@@ -70,17 +70,29 @@ def add(request):
 def insert(request):
     """执行添加"""
     try:
-        # 音频上传
-        myfile = request.FILES.get('productAudio', None)
-        if not myfile:
+        # 音频, 图片上传
+        audio = request.FILES.get('productAudio', None)
+        if not audio:
             context = {
                 'Info': 'Addition Failed',
                 'Detail': 'No audios detected'
             }
             return render(request, 'backstage/info.html', context)
-        filename = str(time.time()) + '.' + myfile.name.split('.').pop()
-        with open('./static/commodity/' + filename, 'wb+') as destination:
-            for chunk in myfile.chunks():
+        audio_name = str(time.time()) + '.' + audio.name.split('.').pop()
+        with open('./static/commodity/' + audio_name, 'wb+') as destination:
+            for chunk in audio.chunks():
+                destination.write(chunk)
+
+        pic = request.FILES.get('productPic', None)
+        if not pic:
+            context = {
+                'Info': 'Addition Failed',
+                'Detail': 'No pictures detected'
+            }
+            return render(request, 'backstage/info.html', context)
+        pic_name = str(time.time()) + '.' + pic.name.split('.').pop()
+        with open('./static/commodity/' + pic_name, 'wb+') as destination:
+            for chunk in pic.chunks():
                 destination.write(chunk)
 
         ob = Books()
@@ -89,8 +101,9 @@ def insert(request):
         ob.goods = request.POST['BookName']
         ob.content = request.POST['bookIntroduction']
         ob.addtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        ob.audio = audio_name
+        ob.pic = pic_name
         ob.novel = request.POST['Novel']
-        ob.audio = filename
         ob.save()
         return redirect('/goods')
     except Exception as err:
@@ -125,24 +138,40 @@ def edit(request, gid):
 
 def update(request, gid):
     """执行编辑"""
-    update_file = request.FILES.get('updateAudio')
-    if not update_file:
-        context = {
-            'Info': 'Addition Failed',
-            'Detail': 'No audios detected'
-        }
-        return render(request, 'backstage/info.html', context)
-    filename = str(time.time()) + '.' + update_file.name.split('.').pop()
-    with open('./static/commodity/' + filename, 'wb+') as destination:
-        for chunk in update_file.chunks():
-            destination.write(chunk)
-
     ob = Books.objects.get(id=gid)
+
+    if request.POST.get('AudioSignal') != '1':
+        edit_audio = request.FILES.get('updateAudio')
+        if not edit_audio:
+            context = {
+                'Info': 'Addition Failed',
+                'Detail': 'No audios detected'
+            }
+            return render(request, 'backstage/info.html', context)
+        update_audio = str(time.time()) + '.' + edit_audio.name.split('.').pop()
+        with open('./static/commodity/' + update_audio, 'wb+') as destination:
+            for chunk in edit_audio.chunks():
+                destination.write(chunk)
+        ob.audio = update_audio
+
+    if request.POST.get('PicSignal') != '1':
+        edit_pic = request.FILES.get('updatePic', None)
+        if not edit_pic:
+            context = {
+                'Info': 'Addition Failed',
+                'Detail': 'No pictures detected'
+            }
+            return render(request, 'backstage/info.html', context)
+        update_pic = str(time.time()) + '.' + edit_pic.name.split('.').pop()
+        with open('./static/commodity/' + update_pic, 'wb+') as destination:
+            for chunk in edit_pic.chunks():
+                destination.write(chunk)
+        ob.pic = update_pic
+
     ob.goods = request.POST['BookName']
     ob.author = request.POST['Author']
     ob.content = request.POST['productIntroduction']
     ob.novel = request.POST['Novel']
-    ob.audio = filename
     ob.save()
     return redirect('/goods')
 
@@ -165,6 +194,20 @@ def audio_delete(request, aid):
         ob = Books.objects.get(audio=aid)
         os.remove('./static/commodity/' + ob.audio)
         ob.audio = None
+        ob.save()
+        return redirect('/goods')
+    except Exception as err:
+        print(err)
+        context = {'Info': 'Delete Failed', 'Detail': err}
+        return render(request, 'backstage/info.html', context)
+
+
+def pic_delete(request, pid):
+    """图片信息删除"""
+    try:
+        ob = Books.objects.get(pic=pid)
+        os.remove('./static/commodity/' + ob.pic)
+        ob.pic = None
         ob.save()
         return redirect('/goods')
     except Exception as err:

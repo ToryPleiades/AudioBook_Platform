@@ -77,8 +77,32 @@
                                                         </th>
                                                     </tr>
                                                 </table>
+                                                <input id="product-audio-dected" name="AudioSignal"
+                                                       style="visibility: hidden" value="1" class="input-material">
                                             {% else %}
                                                 <input id="product-audio" name="updateAudio" type="file"
+                                                       class="input-material">
+                                            {% endif %}
+                                        </div>
+                                        <div class="line"></div>
+                                        <div class="form-group-material">
+                                            <label for="product-pic" class="label-material">Picture</label>
+                                            {% if goods.pic != None %}
+                                                <table class="table table-striped table-hover">
+                                                    <tr>
+                                                        <th>{{ goods.pic }}</th>
+                                                        <th>
+                                                            <a style="text-decoration: none;"
+                                                               href="{% url 'backstage_pic_del' goods.pic %}"
+                                                               class='view-link' onclick="del()">Delete
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                                <input id="product-pic-dected" name="PicSignal"
+                                                       style="visibility: hidden" value="1" class="input-material">
+                                            {% else %}
+                                                <input id="product-pic" name="updatePic" type="file"
                                                        class="input-material">
                                             {% endif %}
                                         </div>
