@@ -60,10 +60,10 @@
                                                 <div class="col-lg-6">
                                                     <select name="typeid" class="form-control"
                                                             style="height: 30px; width: 100px; font-size: 13px; padding: 0px 10px;">
-                                                        <option value="">All</option>
+                                                        <option value="0">All</option>
                                                         {% for vo in typelist %}
                                                             <option value="{{ vo.id }}"
-                                                                    {% if request.GET.typeid == vo.id %}selected{% endif %}>
+                                                                    {% if vo.id == request.GET.typeid %}selected{% endif %}>
                                                                 {{ vo.pname }}|--{{ vo.name }}
                                                             </option>
                                                         {% endfor %}
@@ -81,16 +81,8 @@
                                                 <div class="col-lg-4">
                                                     <button class="btn btn-secondary"
                                                             style="height: 30px; width: 60px; line-height: 0px;">
-                                                        <a href="{% url 'backstage_users_index' %}"
+                                                        <a href="{% url 'backstage_goods_index' %}"
                                                            style="text-decoration: none; color: white;">All</a>
-                                                    </button>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <button class="btn btn-secondary"
-                                                            style="height: 30px; width: 60px; line-height: 0px;">
-                                                        <a style="text-decoration: none;"
-                                                           href="{% url 'backstage_json'%}"
-                                                           class='view-link'>JSON</a>
                                                     </button>
                                                 </div>
                                             </div>
@@ -107,7 +99,6 @@
                                     <th>BookName</th>
                                     <th>Author</th>
                                     <th>Category</th>
-                                    <th>Introduction</th>
                                     <th>Add time</th>
                                     <th>Operation</th>
                                 </tr>
@@ -119,7 +110,6 @@
                                         <th>{{ vo.goods }}</th>
                                         <th>{{ vo.author }}</th>
                                         <td>{{ vo.typename }}</td>
-                                        <td>{{ vo.content }}</td>
                                         <td>{{ vo.addtime }}</td>
                                         <td>
                                             <a style="text-decoration: none;"

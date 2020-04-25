@@ -4,6 +4,7 @@ from common.models import Users
 from django.db.models import Q
 from datetime import datetime
 
+
 # Create your views here.
 
 
@@ -16,8 +17,7 @@ def index(request):
     kw = request.GET.get('keyword', None)
     if kw:
         # 查询账户或真实姓名中只要含有关键字的都可以
-        user_list = umod.filter(
-            Q(username__contains=kw) | Q(name__contains=kw))
+        user_list = umod.filter(Q(username__contains=kw))
         mywhere.append('keyword=' + kw)
     else:
         user_list = umod.filter()

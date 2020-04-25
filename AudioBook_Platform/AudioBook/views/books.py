@@ -33,11 +33,6 @@ def index(request):
             'id', flat=True)
         good_list = good_list.filter(typeid__in=tids)
         mywhere.append('typeid=' + typeid)
-    # 获取、判断并封装商品状态state搜索条件
-    state = request.GET.get('state', '')
-    if state != '':
-        good_list = good_list.filter(state=state)
-        mywhere.append('state=' + state)
 
     # 获取商品类别名称
     for vo in good_list:
@@ -47,9 +42,9 @@ def index(request):
     # 实现分页功能
     paginator = Paginator(good_list, 10)  # 实例化Paginator, 每页显示10条数据
     page = request.GET.get('page', 1)
-    Pag = paginator.page(page)
+    pag = paginator.page(page)
 
-    context = {'goodslist': Pag, 'mywhere': mywhere, 'typelist': tlist}
+    context = {'goodslist': pag, 'mywhere': mywhere, 'typelist': tlist}
     return render(request, 'backstage/goods/index.html', context)
 
 
@@ -70,18 +65,18 @@ def add(request):
 def insert(request):
     """执行添加"""
     try:
+        ob = Books()
+
         # 音频, 图片上传
         audio = request.FILES.get('productAudio', None)
         if not audio:
-            context = {
-                'Info': 'Addition Failed',
-                'Detail': 'No audios detected'
-            }
-            return render(request, 'backstage/info.html', context)
-        audio_name = str(time.time()) + '.' + audio.name.split('.').pop()
-        with open('./static/commodity/' + audio_name, 'wb+') as destination:
-            for chunk in audio.chunks():
-                destination.write(chunk)
+            ob.audio = None
+        else:
+            audio_name = str(time.time()) + '.' + audio.name.split('.').pop()
+            with open('./static/commodity/' + audio_name, 'wb+') as destination:
+                for chunk in audio.chunks():
+                    destination.write(chunk)
+            ob.audio = audio_name
 
         pic = request.FILES.get('productPic', None)
         if not pic:
@@ -95,14 +90,12 @@ def insert(request):
             for chunk in pic.chunks():
                 destination.write(chunk)
 
-        ob = Books()
         ob.typeid = request.POST['typeID']
         ob.author = request.POST['Author']
         ob.goods = request.POST['BookName']
         ob.content = request.POST['bookIntroduction']
         ob.addtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        ob.audio = 'http://121.40.199.164:8000/static/commodity/' + audio_name
-        ob.pic = 'http://121.40.199.164:8000/static/commodity/' + pic_name
+        ob.pic = pic_name
         ob.novel = request.POST['Novel']
         ob.save()
         return redirect('/goods')
@@ -152,7 +145,7 @@ def update(request, gid):
         with open('./static/commodity/' + update_audio, 'wb+') as destination:
             for chunk in edit_audio.chunks():
                 destination.write(chunk)
-        ob.audio = 'http://127.0.0.1:8000/static/commodity/' + update_audio
+        ob.audio = update_audio
 
     if request.POST.get('PicSignal') != '1':
         edit_pic = request.FILES.get('updatePic', None)
@@ -166,7 +159,7 @@ def update(request, gid):
         with open('./static/commodity/' + update_pic, 'wb+') as destination:
             for chunk in edit_pic.chunks():
                 destination.write(chunk)
-        ob.pic = 'http://127.0.0.1:8000/static/commodity/' + update_pic
+        ob.pic = update_pic
 
     ob.goods = request.POST['BookName']
     ob.author = request.POST['Author']
@@ -192,7 +185,7 @@ def audio_delete(request, aid):
     """音频信息删除"""
     try:
         ob = Books.objects.get(audio=aid)
-        os.remove('./static/commodity/' + ob.audio.strip('http://121.40.199.164:8000/static/commodity/'))
+        os.remove('./static/commodity/')
         ob.audio = None
         ob.save()
         return redirect('/goods')
@@ -206,7 +199,7 @@ def pic_delete(request, pid):
     """图片信息删除"""
     try:
         ob = Books.objects.get(pic=pid)
-        os.remove('./static/commodity/' + ob.pic.strip('http://121.40.199.164:8000/static/commodity/'))
+        os.remove('./static/commodity/')
         ob.pic = None
         ob.save()
         return redirect('/goods')
@@ -223,6 +216,10 @@ def json(request):
         book_list = []
         for vo in json_data:
             js_data = vo.toDict()
+            if js_data['audio']:
+                js_data['audio'] = 'http://121.40.199.164:8000/static/commodity/' + js_data['audio']
+            if js_data['pic']:
+                js_data['pic'] = 'http://121.40.199.164:8000/static/commodity/' + js_data['pic']
             book_list.append(js_data)
 
         data = {

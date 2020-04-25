@@ -43,7 +43,7 @@ class Books(models.Model):
     typeid = models.IntegerField()  # 电子书类别ID
     goods = models.CharField(max_length=32)     # 电子书名
     author = models.CharField(max_length=32)    # 电子书作者
-    content = models.CharField(max_length=32)   # 电子书描述
+    content = models.TextField()                # 电子书描述
     addtime = models.DateTimeField(default=datetime.now)
     audio = models.CharField(max_length=100)    # 音频
     pic = models.CharField(max_length=100)      # 图片
