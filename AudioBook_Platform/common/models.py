@@ -56,8 +56,8 @@ class Books(models.Model):
             'goods': self.goods,
             'author': self.author,
             'content': self.content,
-            'audio': self.audio,
-            'pic': self.pic,
+            'audio': 'http://121.40.199.164:8000/static/commodity/' + self.audio,
+            'pic': 'http://121.40.199.164:8000/static/commodity/' + self.pic,
             'novel': self.novel,
         }
 
