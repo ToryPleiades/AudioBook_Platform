@@ -101,8 +101,8 @@ def insert(request):
         ob.goods = request.POST['BookName']
         ob.content = request.POST['bookIntroduction']
         ob.addtime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        ob.audio = 'http://127.0.0.1:8000/static/commodity/' + audio_name
-        ob.pic = 'http://127.0.0.1:8000/static/commodity/' + pic_name
+        ob.audio = 'http://121.40.199.164:8000/static/commodity/' + audio_name
+        ob.pic = 'http://121.40.199.164:8000/static/commodity/' + pic_name
         ob.novel = request.POST['Novel']
         ob.save()
         return redirect('/goods')
@@ -192,7 +192,7 @@ def audio_delete(request, aid):
     """音频信息删除"""
     try:
         ob = Books.objects.get(audio=aid)
-        os.remove('./static/commodity/' + ob.audio.strip('http://127.0.0.1:8000/static/commodity/'))
+        os.remove('./static/commodity/' + ob.audio.strip('http://121.40.199.164:8000/static/commodity/'))
         ob.audio = None
         ob.save()
         return redirect('/goods')
@@ -206,7 +206,7 @@ def pic_delete(request, pid):
     """图片信息删除"""
     try:
         ob = Books.objects.get(pic=pid)
-        os.remove('./static/commodity/' + ob.pic.strip('http://127.0.0.1:8000/static/commodity/'))
+        os.remove('./static/commodity/' + ob.pic.strip('http://121.40.199.164:8000/static/commodity/'))
         ob.pic = None
         ob.save()
         return redirect('/goods')
