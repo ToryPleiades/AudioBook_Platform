@@ -13,6 +13,7 @@ class BookMiddleware(object):
             '/sign_in',
             '/login',
             '/sign_out',
+            '/goods/json'
         ]
 
         # 获取当前请求路径
