@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from common.models import Books, Types
 from django.db.models import Q
 from datetime import datetime
@@ -212,19 +212,33 @@ def pic_delete(request, pid):
 def json(request):
     """返回数据JSON"""
     try:
-        json_data = Books.objects.all()
-        book_list = []
-        for vo in json_data:
-            js_data = vo.toDict()
-            if js_data['audio']:
-                js_data['audio'] = 'http://121.40.199.164:8000/static/commodity/' + js_data['audio']
-            if js_data['pic']:
-                js_data['pic'] = 'http://121.40.199.164:8000/static/commodity/' + js_data['pic']
-            book_list.append(js_data)
+        js_data = Books.objects.order_by('id')
+        json_list = []
+        # 获取、判断并封装关keyword键搜索
+        kw = request.GET.get('keyword', None)
+        if kw:
+            # 查询商品名中只要含有关键字的都可以
+            js_list = js_data.filter(goods__contains=kw)
+        else:
+            js_list = js_data.filter()
+        # 获取、判断并封装商品类别typeid搜索条件
+        typeid = request.GET.get('typeid')
+        if typeid:
+            tid = Types.objects.filter(Q(id=typeid) | Q(pid=typeid)).values_list(
+                'id', flat=True)
+            js_list = js_list.filter(typeid__in=tid)
+
+        for vo in js_list:
+            json_data = vo.toDict()
+            if json_data['audio']:
+                json_data['audio'] = 'http://121.40.199.164:8000/static/commodity/' + json_data['audio']
+            if json_data['pic']:
+                json_data['pic'] = 'http://121.40.199.164:8000/static/commodity/' + json_data['pic']
+            json_list.append(json_data)
 
         data = {
             'name': '书籍列表',
-            'data': book_list
+            'data': json_list
         }
 
         return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
