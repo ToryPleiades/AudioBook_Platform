@@ -19,7 +19,7 @@ class BookMiddleware(object):
         # 获取当前请求路径
         path = request.path
         # 判断用户登录，否则跳转登录页
-        if path not in pass_url:
+        if path not in pass_url and (not re.match('/goods/json', path)):
             if 'admin' not in request.session:
                 return redirect(reverse('backstage_sign_in'))
 

@@ -7,5 +7,5 @@ def get_ip():
     text = url.text
     ip = re.findall(r'\d+.\d+.\d+.\d+', text)
     ip = 'http://' + ip[0] + ':8000/'
-    # ip = 'http://127.0.0.1:8000/'
+    ip = 'http://127.0.0.1:8000/'
     return ip
