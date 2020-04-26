@@ -266,7 +266,7 @@ def type_json(request):
             json_list.append(json_data)
 
         data = {
-            'name': '书籍列表',
+            'name': '类别列表',
             'data': json_list
         }
 
