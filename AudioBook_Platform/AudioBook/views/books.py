@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from common.models import Books, Types
+from common.parse_ip import get_ip
 from django.db.models import Q
 from datetime import datetime
 import time
@@ -109,7 +110,7 @@ def preview(request, gid):
     """商品信息浏览"""
     try:
         ob = Books.objects.get(id=gid)
-        context = {'goods': ob}
+        context = {'goods': ob, 'ip': get_ip()}
         return render(request, 'backstage/goods/preview.html', context)
     except Exception as err:
         print(err)
@@ -231,9 +232,9 @@ def json(request):
         for vo in js_list:
             json_data = vo.toDict()
             if json_data['audio']:
-                json_data['audio'] = 'http://121.40.199.164:8000/static/commodity/' + json_data['audio']
+                json_data['audio'] = get_ip() + 'static/commodity/' + json_data['audio']
             if json_data['pic']:
-                json_data['pic'] = 'http://121.40.199.164:8000/static/commodity/' + json_data['pic']
+                json_data['pic'] = get_ip() + 'static/commodity/' + json_data['pic']
             json_list.append(json_data)
 
         data = {
