@@ -210,8 +210,8 @@ def pic_delete(request, pid):
         return render(request, 'backstage/info.html', context)
 
 
-def json(request):
-    """返回数据JSON"""
+def book_json(request):
+    """返回书籍JSON"""
     try:
         js_data = Books.objects.order_by('id')
         json_list = []
@@ -235,6 +235,34 @@ def json(request):
                 json_data['audio'] = get_ip() + 'static/commodity/' + json_data['audio']
             if json_data['pic']:
                 json_data['pic'] = get_ip() + 'static/commodity/' + json_data['pic']
+            json_list.append(json_data)
+
+        data = {
+            'name': '书籍列表',
+            'data': json_list
+        }
+
+        return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
+    except Exception as err:
+        print(err)
+        context = {'Info': 'Fetch json FAILED', 'Detail': err}
+        return render(request, 'backstage/info.html', context)
+
+
+def type_json(request):
+    """返回类别JSON"""
+    try:
+        type_data = Types.objects
+        json_list = []
+        # 获取、判断并封装商品类别typeid搜索条件
+        typeid = request.GET.get('typeid')
+        if typeid:
+            type_list = type_data.filter(Q(id=typeid) | Q(pid=typeid))
+        else:
+            type_list = type_data.filter()
+
+        for vo in type_list:
+            json_data = vo.toDict()
             json_list.append(json_data)
 
         data = {

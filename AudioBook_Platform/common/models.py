@@ -34,6 +34,14 @@ class Types(models.Model):
     pid = models.IntegerField(default=0)        # 父类别路径
     path = models.CharField(max_length=255)     # 路径
 
+    def toDict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'pid': self.pid,
+            'path': self.path
+        }
+
     class Meta:
         db_table = 'type'
 
